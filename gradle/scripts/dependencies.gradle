@@ -42,6 +42,9 @@ dependencies {
     // rfg.deobf('curse.maven:had-enough-items-557549:4543375')
     // By wrapping a dependency descriptor in rfg.deobf() method call, the dependency is queued for deobfuscation
     // When deobfuscating, RFG respects the mapping_channel + mapping_version stated in gradle.properties
+    implementation rfg.deobf("curse.maven:xaerolib-1417462:7579076")
+    implementation rfg.deobf("curse.maven:xaeros-minimap-263420:7598566")
+    implementation rfg.deobf("curse.maven:xaeros-world-map-317780:7598450")
 
     // Example - CurseMaven dependencies:
     // 'curse.maven:had-enough-items-557549:4543375' << had-enough-items = project slug, 557549 = project id, 4543375 = file id
