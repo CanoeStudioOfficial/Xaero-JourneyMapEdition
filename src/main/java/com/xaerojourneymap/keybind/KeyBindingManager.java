@@ -9,7 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyBindingManager {
 
-    private static final String KEY_CATEGORY = Tags.MOD_NAME;
+    private static final String KEY_CATEGORY = "xaerojourneymap";
 
     private final ModConfig config;
 

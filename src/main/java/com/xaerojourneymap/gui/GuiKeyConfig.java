@@ -4,6 +4,7 @@ import com.xaerojourneymap.config.ModConfig;
 import com.xaerojourneymap.keybind.KeyBindingOverride;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
 
@@ -51,53 +52,54 @@ public class GuiKeyConfig extends GuiScreen {
         int startY = 40;
 
         this.buttonList.add(createToggleButton(ID_J_KEY_OPENS_MAP, centerX, startY,
-            "J Key Opens Map", config.isJKeyOpensMap()));
+            "xaerojourneymap.config.j_key_opens_map", config.isJKeyOpensMap()));
         this.buttonList.add(createToggleButton(ID_J_KEY_CLOSES_MAP, centerX, startY + BUTTON_SPACING,
-            "J Key Closes Map", config.isJKeyClosesMap()));
+            "xaerojourneymap.config.j_key_closes_map", config.isJKeyClosesMap()));
         this.buttonList.add(createToggleButton(ID_HIDE_ORIGINAL_MAP_KEY, centerX, startY + BUTTON_SPACING * 2,
-            "Hide Original M Key", config.isHideOriginalMapKey()));
+            "xaerojourneymap.config.hide_original_map_key", config.isHideOriginalMapKey()));
         this.buttonList.add(createToggleButton(ID_HIDE_ORIGINAL_SETTINGS_KEY, centerX, startY + BUTTON_SPACING * 3,
-            "Hide Original ] Key", config.isHideOriginalSettingsKey()));
+            "xaerojourneymap.config.hide_original_settings_key", config.isHideOriginalSettingsKey()));
 
         int preservedStartY = startY + BUTTON_SPACING * 4 + 20;
         this.buttonList.add(createToggleButton(ID_PRESERVE_WAYPOINT_KEY, centerX, preservedStartY,
-            "Preserve B (Waypoint)", config.isPreserveWaypointKey()));
+            "xaerojourneymap.config.preserve_waypoint_key", config.isPreserveWaypointKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_WAYPOINT_MENU_KEY, centerX, preservedStartY + BUTTON_SPACING,
-            "Preserve U (Waypoint Menu)", config.isPreserveWaypointMenuKey()));
+            "xaerojourneymap.config.preserve_waypoint_menu_key", config.isPreserveWaypointMenuKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_MINIMAP_SETTINGS_KEY, centerX, preservedStartY + BUTTON_SPACING * 2,
-            "Preserve Y (Minimap Settings)", config.isPreserveMinimapSettingsKey()));
+            "xaerojourneymap.config.preserve_minimap_settings_key", config.isPreserveMinimapSettingsKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_ZOOM_KEYS, centerX, preservedStartY + BUTTON_SPACING * 3,
-            "Preserve Zoom Keys", config.isPreserveZoomKeys()));
+            "xaerojourneymap.config.preserve_zoom_keys", config.isPreserveZoomKeys()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_ENLARGE_MAP_KEY, centerX, preservedStartY + BUTTON_SPACING * 4,
-            "Preserve Z (Enlarge Map)", config.isPreserveEnlargeMapKey()));
+            "xaerojourneymap.config.preserve_enlarge_map_key", config.isPreserveEnlargeMapKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_MINIMAP_TOGGLE_KEY, centerX, preservedStartY + BUTTON_SPACING * 5,
-            "Preserve Minimap Toggle", config.isPreserveMinimapToggleKey()));
+            "xaerojourneymap.config.preserve_minimap_toggle_key", config.isPreserveMinimapToggleKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_TEMP_WAYPOINT_KEY, centerX, preservedStartY + BUTTON_SPACING * 6,
-            "Preserve N (Temp Waypoint)", config.isPreserveTempWaypointKey()));
+            "xaerojourneymap.config.preserve_temp_waypoint_key", config.isPreserveTempWaypointKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_RADAR_TOGGLE_KEY, centerX, preservedStartY + BUTTON_SPACING * 7,
-            "Preserve Radar Toggle", config.isPreserveRadarToggleKey()));
+            "xaerojourneymap.config.preserve_radar_toggle_key", config.isPreserveRadarToggleKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_SLIME_CHUNKS_KEY, centerX, preservedStartY + BUTTON_SPACING * 8,
-            "Preserve Slime Chunks", config.isPreserveSlimeChunksKey()));
+            "xaerojourneymap.config.preserve_slime_chunks_key", config.isPreserveSlimeChunksKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_LIGHT_OVERLAY_KEY, centerX, preservedStartY + BUTTON_SPACING * 9,
-            "Preserve Light Overlay", config.isPreserveLightOverlayKey()));
+            "xaerojourneymap.config.preserve_light_overlay_key", config.isPreserveLightOverlayKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_GRID_TOGGLE_KEY, centerX, preservedStartY + BUTTON_SPACING * 10,
-            "Preserve Grid Toggle", config.isPreserveGridToggleKey()));
+            "xaerojourneymap.config.preserve_grid_toggle_key", config.isPreserveGridToggleKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_WORLD_WAYPOINTS_KEY, centerX, preservedStartY + BUTTON_SPACING * 11,
-            "Preserve World Waypoints", config.isPreserveWorldWaypointsKey()));
+            "xaerojourneymap.config.preserve_world_waypoints_key", config.isPreserveWorldWaypointsKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_MAP_WAYPOINTS_KEY, centerX, preservedStartY + BUTTON_SPACING * 12,
-            "Preserve Map Waypoints", config.isPreserveMapWaypointsKey()));
+            "xaerojourneymap.config.preserve_map_waypoints_key", config.isPreserveMapWaypointsKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_SWITCH_WAYPOINT_SET_KEY, centerX, preservedStartY + BUTTON_SPACING * 13,
-            "Preserve Switch Waypoint Set", config.isPreserveSwitchWaypointSetKey()));
+            "xaerojourneymap.config.preserve_switch_waypoint_set_key", config.isPreserveSwitchWaypointSetKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_MANUAL_CAVE_MODE_KEY, centerX, preservedStartY + BUTTON_SPACING * 14,
-            "Preserve Manual Cave Mode", config.isPreserveManualCaveModeKey()));
+            "xaerojourneymap.config.preserve_manual_cave_mode_key", config.isPreserveManualCaveModeKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_TOGGLE_DIMENSION_KEY, centerX, preservedStartY + BUTTON_SPACING * 15,
-            "Preserve Dimension Toggle", config.isPreserveToggleDimensionKey()));
+            "xaerojourneymap.config.preserve_toggle_dimension_key", config.isPreserveToggleDimensionKey()));
 
         this.buttonList.add(new GuiButton(ID_DONE, centerX - BUTTON_WIDTH / 2,
-            this.height - 30, BUTTON_WIDTH, BUTTON_HEIGHT, "Done"));
+            this.height - 30, BUTTON_WIDTH, BUTTON_HEIGHT, I18n.format("gui.done")));
     }
 
-    private GuiButton createToggleButton(int id, int centerX, int y, String label, boolean value) {
+    private GuiButton createToggleButton(int id, int centerX, int y, String langKey, boolean value) {
+        String label = I18n.format(langKey);
         String displayText = label + ": " + (value ? "\u00a7aON" : "\u00a7cOFF");
         return new GuiButton(id, centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT, displayText);
     }
@@ -183,13 +185,16 @@ public class GuiKeyConfig extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRenderer, "Xaero JourneyMap Edition - Key Configuration",
+        this.drawCenteredString(this.fontRenderer,
+            I18n.format("xaerojourneymap.config.title"),
             this.width / 2, 12, 0xFFFFFF);
-        this.drawCenteredString(this.fontRenderer, "General Settings",
+        this.drawCenteredString(this.fontRenderer,
+            I18n.format("xaerojourneymap.config.general_settings"),
             this.width / 2, 28, 0xAAAAAA);
 
         int preservedStartY = 40 + BUTTON_SPACING * 4 + 8;
-        this.drawCenteredString(this.fontRenderer, "Preserved Xaero Key Bindings",
+        this.drawCenteredString(this.fontRenderer,
+            I18n.format("xaerojourneymap.config.preserved_keys"),
             this.width / 2, preservedStartY, 0xAAAAAA);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
