@@ -1,6 +1,5 @@
 package com.xaerojourneymap.keybind;
 
-import com.xaerojourneymap.Tags;
 import com.xaerojourneymap.XaeroJourneyMapMod;
 import com.xaerojourneymap.config.ModConfig;
 import net.minecraft.client.settings.KeyBinding;
@@ -15,6 +14,7 @@ public class KeyBindingManager {
 
     private KeyBinding keyOpenMap;
     private KeyBinding keyOpenSettings;
+    private KeyBinding keyToggleStyle;
 
     public KeyBindingManager(ModConfig config) {
         this.config = config;
@@ -35,7 +35,14 @@ public class KeyBindingManager {
         );
         ClientRegistry.registerKeyBinding(keyOpenSettings);
 
-        XaeroJourneyMapMod.LOGGER.info("Registered key bindings: J (open map), NONE (open settings)");
+        keyToggleStyle = new KeyBinding(
+            "key.xaerojourneymap.toggle_style",
+            Keyboard.KEY_NONE,
+            KEY_CATEGORY
+        );
+        ClientRegistry.registerKeyBinding(keyToggleStyle);
+
+        XaeroJourneyMapMod.LOGGER.info("Registered key bindings: J (open map), NONE (open settings), NONE (toggle style)");
     }
 
     public KeyBinding getKeyOpenMap() {
@@ -46,12 +53,20 @@ public class KeyBindingManager {
         return keyOpenSettings;
     }
 
+    public KeyBinding getKeyToggleStyle() {
+        return keyToggleStyle;
+    }
+
     public boolean isMapKeyPressed() {
         return keyOpenMap.isPressed();
     }
 
     public boolean isSettingsKeyPressed() {
         return keyOpenSettings.isPressed();
+    }
+
+    public boolean isStyleToggleKeyPressed() {
+        return config.isStyleSwitchKeyEnabled() && keyToggleStyle.isPressed();
     }
 
     public boolean isMapKeyDown() {

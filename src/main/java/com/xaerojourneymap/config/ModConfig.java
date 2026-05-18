@@ -10,9 +10,13 @@ public class ModConfig {
     private static final String CATEGORY_GENERAL = "general";
     private static final String CATEGORY_KEY_OVERRIDE = "key_override";
     private static final String CATEGORY_PRESERVED_KEYS = "preserved_keys";
+    private static final String CATEGORY_VISUAL_STYLE = "visual_style";
 
     private Configuration config;
     private File configDir;
+
+    private String visualStyle;
+    private boolean styleSwitchKeyEnabled;
 
     private boolean jKeyOpensMap;
     private boolean jKeyClosesMap;
@@ -85,6 +89,11 @@ public class ModConfig {
         preserveMapWaypointsKey = config.getBoolean("preserveMapWaypointsKey", CATEGORY_PRESERVED_KEYS, false,
             "Whether to preserve the map waypoints toggle key binding");
 
+        visualStyle = config.getString("visualStyle", CATEGORY_VISUAL_STYLE, "xaero",
+            "Visual style: 'journeymap' for JourneyMap style, 'xaero' for Xaero default style");
+        styleSwitchKeyEnabled = config.getBoolean("styleSwitchKeyEnabled", CATEGORY_VISUAL_STYLE, true,
+            "Whether to enable the key binding for switching visual styles");
+
         config.save();
         XaeroJourneyMapMod.LOGGER.info("Configuration loaded");
     }
@@ -111,6 +120,9 @@ public class ModConfig {
         config.getCategory(CATEGORY_PRESERVED_KEYS).get("preserveGridToggleKey").set(preserveGridToggleKey);
         config.getCategory(CATEGORY_PRESERVED_KEYS).get("preserveWorldWaypointsKey").set(preserveWorldWaypointsKey);
         config.getCategory(CATEGORY_PRESERVED_KEYS).get("preserveMapWaypointsKey").set(preserveMapWaypointsKey);
+
+        config.getCategory(CATEGORY_VISUAL_STYLE).get("visualStyle").set(visualStyle);
+        config.getCategory(CATEGORY_VISUAL_STYLE).get("styleSwitchKeyEnabled").set(styleSwitchKeyEnabled);
 
         config.save();
         XaeroJourneyMapMod.LOGGER.info("Configuration saved");
@@ -156,4 +168,8 @@ public class ModConfig {
     public void setPreserveWorldWaypointsKey(boolean v) { this.preserveWorldWaypointsKey = v; }
     public boolean isPreserveMapWaypointsKey() { return preserveMapWaypointsKey; }
     public void setPreserveMapWaypointsKey(boolean v) { this.preserveMapWaypointsKey = v; }
+    public String getVisualStyle() { return visualStyle; }
+    public void setVisualStyle(String v) { this.visualStyle = v; }
+    public boolean isStyleSwitchKeyEnabled() { return styleSwitchKeyEnabled; }
+    public void setStyleSwitchKeyEnabled(boolean v) { this.styleSwitchKeyEnabled = v; }
 }

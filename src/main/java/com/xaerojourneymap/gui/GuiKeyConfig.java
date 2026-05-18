@@ -1,7 +1,10 @@
 package com.xaerojourneymap.gui;
 
+import com.xaerojourneymap.XaeroJourneyMapMod;
 import com.xaerojourneymap.config.ModConfig;
 import com.xaerojourneymap.keybind.KeyBindingOverride;
+import com.xaerojourneymap.style.StyleManager;
+import com.xaerojourneymap.style.VisualStyle;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -22,22 +25,24 @@ public class GuiKeyConfig extends GuiScreen {
     private static final int ID_J_KEY_CLOSES_MAP = 1;
     private static final int ID_HIDE_ORIGINAL_MAP_KEY = 2;
     private static final int ID_HIDE_ORIGINAL_SETTINGS_KEY = 3;
-    private static final int ID_PRESERVE_WAYPOINT_KEY = 4;
-    private static final int ID_PRESERVE_MINIMAP_SETTINGS_KEY = 5;
-    private static final int ID_PRESERVE_WAYPOINT_MENU_KEY = 6;
-    private static final int ID_PRESERVE_ZOOM_KEYS = 7;
-    private static final int ID_PRESERVE_ENLARGE_MAP_KEY = 8;
-    private static final int ID_PRESERVE_MINIMAP_TOGGLE_KEY = 9;
-    private static final int ID_PRESERVE_TEMP_WAYPOINT_KEY = 10;
-    private static final int ID_PRESERVE_RADAR_TOGGLE_KEY = 11;
-    private static final int ID_PRESERVE_SLIME_CHUNKS_KEY = 12;
-    private static final int ID_PRESERVE_LIGHT_OVERLAY_KEY = 13;
-    private static final int ID_PRESERVE_GRID_TOGGLE_KEY = 14;
-    private static final int ID_PRESERVE_WORLD_WAYPOINTS_KEY = 15;
-    private static final int ID_PRESERVE_MAP_WAYPOINTS_KEY = 16;
-    private static final int ID_PRESERVE_SWITCH_WAYPOINT_SET_KEY = 17;
-    private static final int ID_PRESERVE_MANUAL_CAVE_MODE_KEY = 18;
-    private static final int ID_PRESERVE_TOGGLE_DIMENSION_KEY = 19;
+    private static final int ID_VISUAL_STYLE = 4;
+    private static final int ID_STYLE_SWITCH_KEY = 5;
+    private static final int ID_PRESERVE_WAYPOINT_KEY = 10;
+    private static final int ID_PRESERVE_MINIMAP_SETTINGS_KEY = 11;
+    private static final int ID_PRESERVE_WAYPOINT_MENU_KEY = 12;
+    private static final int ID_PRESERVE_ZOOM_KEYS = 13;
+    private static final int ID_PRESERVE_ENLARGE_MAP_KEY = 14;
+    private static final int ID_PRESERVE_MINIMAP_TOGGLE_KEY = 15;
+    private static final int ID_PRESERVE_TEMP_WAYPOINT_KEY = 16;
+    private static final int ID_PRESERVE_RADAR_TOGGLE_KEY = 17;
+    private static final int ID_PRESERVE_SLIME_CHUNKS_KEY = 18;
+    private static final int ID_PRESERVE_LIGHT_OVERLAY_KEY = 19;
+    private static final int ID_PRESERVE_GRID_TOGGLE_KEY = 20;
+    private static final int ID_PRESERVE_WORLD_WAYPOINTS_KEY = 21;
+    private static final int ID_PRESERVE_MAP_WAYPOINTS_KEY = 22;
+    private static final int ID_PRESERVE_SWITCH_WAYPOINT_SET_KEY = 23;
+    private static final int ID_PRESERVE_MANUAL_CAVE_MODE_KEY = 24;
+    private static final int ID_PRESERVE_TOGGLE_DIMENSION_KEY = 25;
     private static final int ID_DONE = 100;
 
     public GuiKeyConfig(GuiScreen parentScreen, ModConfig config, KeyBindingOverride keyBindingOverride) {
@@ -60,7 +65,12 @@ public class GuiKeyConfig extends GuiScreen {
         this.buttonList.add(createToggleButton(ID_HIDE_ORIGINAL_SETTINGS_KEY, centerX, startY + BUTTON_SPACING * 3,
             "xaerojourneymap.config.hide_original_settings_key", config.isHideOriginalSettingsKey()));
 
-        int preservedStartY = startY + BUTTON_SPACING * 4 + 20;
+        int styleStartY = startY + BUTTON_SPACING * 4 + 20;
+        this.buttonList.add(createStyleButton(ID_VISUAL_STYLE, centerX, styleStartY));
+        this.buttonList.add(createToggleButton(ID_STYLE_SWITCH_KEY, centerX, styleStartY + BUTTON_SPACING,
+            "xaerojourneymap.config.style_switch_key", config.isStyleSwitchKeyEnabled()));
+
+        int preservedStartY = styleStartY + BUTTON_SPACING * 2 + 20;
         this.buttonList.add(createToggleButton(ID_PRESERVE_WAYPOINT_KEY, centerX, preservedStartY,
             "xaerojourneymap.config.preserve_waypoint_key", config.isPreserveWaypointKey()));
         this.buttonList.add(createToggleButton(ID_PRESERVE_WAYPOINT_MENU_KEY, centerX, preservedStartY + BUTTON_SPACING,
@@ -104,6 +114,13 @@ public class GuiKeyConfig extends GuiScreen {
         return new GuiButton(id, centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT, displayText);
     }
 
+    private GuiButton createStyleButton(int id, int centerX, int y) {
+        VisualStyle style = VisualStyle.fromKey(config.getVisualStyle());
+        String styleName = I18n.format("xaerojourneymap.style." + style.getKey());
+        String displayText = I18n.format("xaerojourneymap.config.visual_style") + ": " + styleName;
+        return new GuiButton(id, centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT, displayText);
+    }
+
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         if (!button.enabled) return;
@@ -120,6 +137,12 @@ public class GuiKeyConfig extends GuiScreen {
                 break;
             case ID_HIDE_ORIGINAL_SETTINGS_KEY:
                 config.setHideOriginalSettingsKey(!config.isHideOriginalSettingsKey());
+                break;
+            case ID_VISUAL_STYLE:
+                toggleVisualStyle();
+                break;
+            case ID_STYLE_SWITCH_KEY:
+                config.setStyleSwitchKeyEnabled(!config.isStyleSwitchKeyEnabled());
                 break;
             case ID_PRESERVE_WAYPOINT_KEY:
                 config.setPreserveWaypointKey(!config.isPreserveWaypointKey());
@@ -182,6 +205,13 @@ public class GuiKeyConfig extends GuiScreen {
         this.initGui();
     }
 
+    private void toggleVisualStyle() {
+        StyleManager sm = XaeroJourneyMapMod.INSTANCE.getStyleManager();
+        if (sm != null) {
+            sm.toggleStyle();
+        }
+    }
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
@@ -192,7 +222,12 @@ public class GuiKeyConfig extends GuiScreen {
             I18n.format("xaerojourneymap.config.general_settings"),
             this.width / 2, 28, 0xAAAAAA);
 
-        int preservedStartY = 40 + BUTTON_SPACING * 4 + 8;
+        int styleStartY = 40 + BUTTON_SPACING * 4 + 8;
+        this.drawCenteredString(this.fontRenderer,
+            I18n.format("xaerojourneymap.config.visual_style_section"),
+            this.width / 2, styleStartY, 0xAAAAAA);
+
+        int preservedStartY = styleStartY + BUTTON_SPACING * 2 + 8;
         this.drawCenteredString(this.fontRenderer,
             I18n.format("xaerojourneymap.config.preserved_keys"),
             this.width / 2, preservedStartY, 0xAAAAAA);

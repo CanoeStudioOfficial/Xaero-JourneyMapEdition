@@ -5,6 +5,8 @@ import com.xaerojourneymap.gui.GuiKeyConfig;
 import com.xaerojourneymap.keybind.KeyActionHandler;
 import com.xaerojourneymap.keybind.KeyBindingManager;
 import com.xaerojourneymap.keybind.KeyBindingOverride;
+import com.xaerojourneymap.style.StyleManager;
+import com.xaerojourneymap.style.overlay.MapStyleOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +31,8 @@ public class XaeroJourneyMapMod {
     private KeyBindingManager keyBindingManager;
     private KeyActionHandler keyActionHandler;
     private KeyBindingOverride keyBindingOverride;
+    private StyleManager styleManager;
+    private MapStyleOverlay mapStyleOverlay;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -44,7 +48,12 @@ public class XaeroJourneyMapMod {
 
         keyActionHandler = new KeyActionHandler(config, keyBindingManager);
         MinecraftForge.EVENT_BUS.register(keyActionHandler);
-        MinecraftForge.EVENT_BUS.register(this);
+
+        styleManager = new StyleManager(config);
+        keyActionHandler.setStyleManager(styleManager);
+
+        mapStyleOverlay = new MapStyleOverlay(styleManager);
+        MinecraftForge.EVENT_BUS.register(mapStyleOverlay);
 
         LOGGER.info("Xaero JourneyMap Edition init complete");
     }
@@ -54,7 +63,10 @@ public class XaeroJourneyMapMod {
         keyBindingOverride = new KeyBindingOverride(config);
         keyBindingOverride.overrideXaeroKeyBindings();
 
-        LOGGER.info("Xaero JourneyMap Edition postInit complete - Xaero key bindings overridden");
+        styleManager.initialize();
+
+        LOGGER.info("Xaero JourneyMap Edition postInit complete - Xaero key bindings overridden, visual style: {}",
+            styleManager.getCurrentStyle().name());
     }
 
     public ModConfig getConfig() {
@@ -67,6 +79,10 @@ public class XaeroJourneyMapMod {
 
     public KeyBindingOverride getKeyBindingOverride() {
         return keyBindingOverride;
+    }
+
+    public StyleManager getStyleManager() {
+        return styleManager;
     }
 
     public void openConfigScreen() {

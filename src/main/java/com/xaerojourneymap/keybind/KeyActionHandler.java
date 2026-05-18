@@ -4,9 +4,12 @@ import com.xaerojourneymap.XaeroJourneyMapMod;
 import com.xaerojourneymap.config.ModConfig;
 import com.xaerojourneymap.integration.ModPresenceDetector;
 import com.xaerojourneymap.integration.XaeroWorldMapHelper;
+import com.xaerojourneymap.style.StyleManager;
+import com.xaerojourneymap.style.VisualStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -16,10 +19,15 @@ public class KeyActionHandler {
 
     private final ModConfig config;
     private final KeyBindingManager keyBindingManager;
+    private StyleManager styleManager;
 
     public KeyActionHandler(ModConfig config, KeyBindingManager keyBindingManager) {
         this.config = config;
         this.keyBindingManager = keyBindingManager;
+    }
+
+    public void setStyleManager(StyleManager styleManager) {
+        this.styleManager = styleManager;
     }
 
     @SubscribeEvent
@@ -35,6 +43,15 @@ public class KeyActionHandler {
 
         if (keyBindingManager.isSettingsKeyPressed()) {
             openSettings(mc);
+        }
+
+        if (keyBindingManager.isStyleToggleKeyPressed() && styleManager != null) {
+            styleManager.toggleStyle();
+            VisualStyle current = styleManager.getCurrentStyle();
+            if (mc.player != null) {
+                mc.player.sendMessage(new TextComponentTranslation(
+                    "xaerojourneymap.style.switched", current.name()));
+            }
         }
     }
 
